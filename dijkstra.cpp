@@ -2,6 +2,7 @@
 #include <vector>
 #include <set>
 #include <algorithm>
+#include <fstream>
 
 using namespace std;
 
@@ -30,14 +31,20 @@ void dijkstra(int start) {
     }
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+    ifstream file;
+    file.open(argv[1]);
+    if (!file) {
+        cout << "Не удалось открыть файл\n";
+        return 1;
+    }
     int w, h;
-    cin >> w >> h;
+    file >> w >> h;
     vector<vector<int>> a(w, vector<int>(h));
     for (int i = 0; i < w; i++) {
         for (int j = 0; j < h; j++) {
             char c;
-            cin >> c;
+            file >> c;
             if (c == '.') {
                 a[i][j] = 1;
             }
@@ -62,7 +69,8 @@ int main() {
         }
     }
     int st_x, st_y, f_x, f_y;
-    cin >> st_x >> st_y >> f_x >> f_y;
+    file >> st_x >> st_y >> f_x >> f_y;
+    file.close();
     int start = st_x * h + st_y;
     dijkstra(start);
     int pos = f_x * h + f_y;
