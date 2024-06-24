@@ -6,12 +6,10 @@
 
 using namespace std;
 
-const long long INF = 1e18;
-vector<vector<pair<int, int>>> G;
-vector<long long> dist;
-vector<int> pred;
-
-void dijkstra(int start) {
+pair<vector<long long>, vector<int>> dijkstra(int w, int h, int start, vector<vector<pair<int, int>>> &G) {
+    const long long INF = 1e18;
+    vector<long long> dist(w * h, INF);
+    vector<int> pred(w * h);
     dist[start] = 0;
     pred[start] = -1;
     set<pair<long long, int>> pq;
@@ -28,6 +26,7 @@ void dijkstra(int start) {
             }
         }
     }
+    return {dist, pred};
 }
 
 int main(int argc, char* argv[]) {
@@ -49,9 +48,7 @@ int main(int argc, char* argv[]) {
             }
         }
     }
-    G.resize(w * h);
-    dist.resize(w * h, INF);
-    pred.resize(w * h);
+    vector<vector<pair<int, int>>> G(w * h);
     vector<pair<int, int>> sosedi = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
     for (int i = 0; i < w; i++) {
         for (int j = 0; j < h; j++) {
@@ -71,7 +68,9 @@ int main(int argc, char* argv[]) {
     file >> st_x >> st_y >> f_x >> f_y;
     file.close();
     int start = st_x * h + st_y;
-    dijkstra(start);
+    pair<vector<long long>, vector<int>> answer = dijkstra(w, h, start, G);
+    vector<long long> dist = answer.first;
+    vector<int> pred = answer.second;
     int pos = f_x * h + f_y;
     vector<int> ans;
     while (pos != -1) {
