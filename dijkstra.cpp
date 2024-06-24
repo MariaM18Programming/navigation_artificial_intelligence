@@ -6,7 +6,6 @@
 
 using namespace std;
 
-int n;
 const long long INF = 1e18;
 vector<vector<pair<int, int>>> G;
 vector<long long> dist;
