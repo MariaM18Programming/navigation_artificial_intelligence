@@ -16,7 +16,7 @@ pair<vector<long double>, vector<int>> a_star(int w, int h, int start, int finis
     vector<long double> f(w * h, INF), g(w * h, INF);
     vector<int> pred(w * h);
     g[start] = 0;
-    f[start] = g[start] + fun_h(start, start, h);
+    f[start] = g[start] + fun_h(finish, start, h);
     pred[start] = -1;
     set<pair<long double, int>> pq;
     pq.insert({f[start], start});
@@ -30,7 +30,7 @@ pair<vector<long double>, vector<int>> a_star(int w, int h, int start, int finis
             if (g[u] + wt < g[v]) {
                 pq.erase({f[v], v});
                 g[v] = g[u] + wt;
-                f[v] = g[v] + fun_h(start, v, h);
+                f[v] = g[v] + fun_h(finish, v, h);
                 pred[v] = u;
                 pq.insert({f[v], v});
             }
